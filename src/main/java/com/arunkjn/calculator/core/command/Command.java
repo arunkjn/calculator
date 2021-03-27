@@ -4,5 +4,5 @@ import com.arunkjn.calculator.core.CalculatorContext;
 
 public interface Command {
     int getNumOperands();
-    Effect operate(CalculatorContext context);
+    Effect execute(CalculatorContext context);
 }

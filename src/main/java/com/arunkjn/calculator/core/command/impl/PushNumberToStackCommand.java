@@ -21,7 +21,7 @@ public class PushNumberToStackCommand implements Command {
     }
 
     @Override
-    public Effect operate(CalculatorContext context) {
+    public Effect execute(CalculatorContext context) {
         BigDecimal number = new BigDecimal(token.getOriginalToken())
             .setScale(context.getStorageDecimalPrecision(), context.getRoundingMode());
         context.getStack().push(number);

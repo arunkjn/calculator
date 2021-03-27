@@ -13,7 +13,7 @@ public class UndoCommand implements Command {
     }
 
     @Override
-    public Effect operate(CalculatorContext context) {
+    public Effect execute(CalculatorContext context) {
         if(context.getUndoStack().isEmpty()) {
             return null;
         }

@@ -15,7 +15,7 @@ public class ClearCommand implements Command {
     }
 
     @Override
-    public Effect operate(CalculatorContext context) {
+    public Effect execute(CalculatorContext context) {
         final Stack<BigDecimal> stack = context.getStack();
         final List<BigDecimal> elements = new ArrayList<>(stack.size());
         while (!stack.empty()){

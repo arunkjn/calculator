@@ -48,7 +48,7 @@ public class RPNCalculator implements Calculator{
                     result.completeExceptionally(new OperatorException(token.getOriginalToken(), token.getPositionInInputString(), "insufficient parameters"));
                 }
                 try {
-                    Effect effect = command.operate(context);
+                    Effect effect = command.execute(context);
                     if(effect != null) {
                         context.getUndoStack().push(effect);
                     }

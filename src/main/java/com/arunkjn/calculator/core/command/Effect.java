@@ -15,7 +15,6 @@ public class Effect {
     public List<BigDecimal> getPopped() {
         return popped;
     }
-
     public List<BigDecimal> getPushed() {
         return pushed;
     }

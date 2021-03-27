@@ -14,7 +14,7 @@ public class DivisionCommand implements Command {
     }
 
     @Override
-    public Effect operate(CalculatorContext context) {
+    public Effect execute(CalculatorContext context) {
         final Stack<BigDecimal> stack = context.getStack();
         final BigDecimal second = stack.pop();
         final BigDecimal first = stack.pop();

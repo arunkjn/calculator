@@ -11,7 +11,7 @@ public class InvalidCommand implements Command {
     }
 
     @Override
-    public Effect operate(CalculatorContext context) {
+    public Effect execute(CalculatorContext context) {
         throw new RuntimeException("unsupported operator");
     }
 }

@@ -15,7 +15,7 @@ public class SquareRootCommand implements Command {
     }
 
     @Override
-    public Effect operate(CalculatorContext context) {
+    public Effect execute(CalculatorContext context) {
         final Stack<BigDecimal> stack = context.getStack();
         final BigDecimal operand = stack.pop();
         final BigDecimal result = operand.sqrt(MathContext.DECIMAL128)
