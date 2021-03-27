@@ -1,23 +1,21 @@
-package com.arunkjn.calculator.core.inputToken;
+package com.arunkjn.calculator.core;
 
 import java.util.Objects;
 
-public abstract class AbstractInputToken implements InputToken{
+public class InputToken {
 
     private final String originalToken;
     private final int position;
 
-    public AbstractInputToken(String token, int position) {
+    public InputToken(String token, int position) {
         this.originalToken = token;
         this.position = position;
     }
 
-    @Override
     public String getOriginalToken() {
         return originalToken;
     }
 
-    @Override
     public int getPositionInInputString() {
         return position;
     }
@@ -30,7 +28,7 @@ public abstract class AbstractInputToken implements InputToken{
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        AbstractInputToken that = (AbstractInputToken) o;
+        InputToken that = (InputToken) o;
         return position == that.position && originalToken.equals(that.originalToken);
     }
 

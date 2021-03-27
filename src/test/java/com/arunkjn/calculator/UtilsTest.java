@@ -2,10 +2,8 @@ package com.arunkjn.calculator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.arunkjn.calculator.core.InputToken;
 import com.arunkjn.calculator.core.Utils;
-import com.arunkjn.calculator.core.inputToken.InputToken;
-import com.arunkjn.calculator.core.inputToken.impl.NumericInputToken;
-import com.arunkjn.calculator.core.inputToken.impl.OperatorInputToken;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;
@@ -27,61 +25,61 @@ public class UtilsTest {
             Arguments.of(
                 "asd asd asd",
                 List.of(
-                    new OperatorInputToken("asd", 0),
-                    new OperatorInputToken("asd",4),
-                    new OperatorInputToken("asd",8)
+                    new InputToken("asd", 0),
+                    new InputToken("asd",4),
+                    new InputToken("asd",8)
                 )
             ),
             Arguments.of(
                 "asd   asd asd",
                 List.of(
-                    new OperatorInputToken("asd", 0),
-                    new OperatorInputToken("asd",6),
-                    new OperatorInputToken("asd",10)
+                    new InputToken("asd", 0),
+                    new InputToken("asd",6),
+                    new InputToken("asd",10)
                 )
             ),
             Arguments.of(
                 "asd \tasd asd",
                 List.of(
-                    new OperatorInputToken("asd", 0),
-                    new OperatorInputToken("asd",5),
-                    new OperatorInputToken("asd",9)
+                    new InputToken("asd", 0),
+                    new InputToken("asd",5),
+                    new InputToken("asd",9)
                 )
             ),
             Arguments.of(
                 "  asd asd asd",
                 List.of(
-                    new OperatorInputToken("asd", 2),
-                    new OperatorInputToken("asd",6),
-                    new OperatorInputToken("asd",10)
+                    new InputToken("asd", 2),
+                    new InputToken("asd",6),
+                    new InputToken("asd",10)
                 )
             ),
             Arguments.of(
                 "asd asd asd  ",
                 List.of(
-                    new OperatorInputToken("asd", 0),
-                    new OperatorInputToken("asd",4),
-                    new OperatorInputToken("asd",8)
+                    new InputToken("asd", 0),
+                    new InputToken("asd",4),
+                    new InputToken("asd",8)
                 )
             ),
             Arguments.of(
                 "  asd asd asd  ",
                 List.of(
-                    new OperatorInputToken("asd", 2),
-                    new OperatorInputToken("asd",6),
-                    new OperatorInputToken("asd",10)
+                    new InputToken("asd", 2),
+                    new InputToken("asd",6),
+                    new InputToken("asd",10)
                 )
             ),
             Arguments.of(
                 "2 3 4 5 + - *",
                 List.of(
-                    new NumericInputToken("2", 0),
-                    new NumericInputToken("3", 2),
-                    new NumericInputToken("4", 4),
-                    new NumericInputToken("5", 6),
-                    new OperatorInputToken("+", 8),
-                    new OperatorInputToken("-",10),
-                    new OperatorInputToken("*",12)
+                    new InputToken("2", 0),
+                    new InputToken("3", 2),
+                    new InputToken("4", 4),
+                    new InputToken("5", 6),
+                    new InputToken("+", 8),
+                    new InputToken("-",10),
+                    new InputToken("*",12)
                 )
             )
         );

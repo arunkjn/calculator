@@ -1,26 +1,27 @@
-package com.arunkjn.calculator.core.operator;
+package com.arunkjn.calculator.core.command;
 
-public enum OperatorType {
+public enum CommandType {
     PLUS("+"),
     MINUS("-"),
     DIVIDE("/"),
     MULTIPLY("*"),
     CLEAR("clear"),
     SQRT("sqrt"),
+    UNDO("undo"),
     INVALID("");
 
     private final String value;
-    OperatorType(String value){
+    CommandType(String value){
         this.value = value;
     }
 
-    public static OperatorType fromString(String value) {
-        for(OperatorType operator: OperatorType.values()){
+    public static CommandType fromString(String value) {
+        for(CommandType operator: CommandType.values()){
             if(value.equals(operator.value)){
                 return operator;
             }
         }
-        return OperatorType.INVALID;
+        return CommandType.INVALID;
     }
 
     @Override

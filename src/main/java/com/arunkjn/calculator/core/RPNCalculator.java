@@ -1,10 +1,9 @@
 package com.arunkjn.calculator.core;
 
+import com.arunkjn.calculator.core.command.Effect;
 import com.arunkjn.calculator.core.exception.OperatorException;
-import com.arunkjn.calculator.core.inputToken.InputToken;
-import com.arunkjn.calculator.core.inputToken.impl.NumericInputToken;
-import com.arunkjn.calculator.core.inputToken.impl.OperatorInputToken;
-import com.arunkjn.calculator.core.operator.Operator;
+import com.arunkjn.calculator.core.command.Command;
+import com.arunkjn.calculator.core.command.CommandFactory;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -26,7 +25,7 @@ public class RPNCalculator implements Calculator{
         CompletableFuture<List<String>> result = new CompletableFuture<>();
         executorService.submit(() -> {
             result.complete(
-                context.getStack().getAll().stream()
+                context.getStack().stream()
                     .map(v -> v.setScale(context.getDisplayDecimalPrecision(), context.getRoundingMode()))
                     .map(BigDecimal::stripTrailingZeros)
                     .map(BigDecimal::toPlainString)
@@ -44,26 +43,17 @@ public class RPNCalculator implements Calculator{
             List<InputToken> tokens = Utils.tokenize(inputString);
 
             for(InputToken token: tokens) {
-                if(token instanceof NumericInputToken) {
-                    NumericInputToken numericInputToken = (NumericInputToken) token;
-                    context.getStack()
-                        .push(
-                            numericInputToken.getNumericValue(
-                                context.getStorageDecimalPrecision(),
-                                context.getRoundingMode()
-                            )
-                        );
-                } else if(token instanceof OperatorInputToken) {
-                    OperatorInputToken operatorInputToken = (OperatorInputToken) token;
-                    Operator operator = operatorInputToken.getOperator();
-                    if (context.getStack().size() < operator.getNumOperands()) {
-                        result.completeExceptionally(new OperatorException(token.getOriginalToken(), token.getPositionInInputString(), "insufficient parameters"));
+                Command command = CommandFactory.getOperator(token);
+                if (context.getStack().size() < command.getNumOperands()) {
+                    result.completeExceptionally(new OperatorException(token.getOriginalToken(), token.getPositionInInputString(), "insufficient parameters"));
+                }
+                try {
+                    Effect effect = command.operate(context);
+                    if(effect != null) {
+                        context.getUndoStack().push(effect);
                     }
-                    try {
-                        operator.operate(context);
-                    } catch (RuntimeException e) {
-                        result.completeExceptionally(new OperatorException(token.getOriginalToken(), token.getPositionInInputString(), e.getMessage()));
-                    }
+                } catch (RuntimeException e) {
+                    result.completeExceptionally(new OperatorException(token.getOriginalToken(), token.getPositionInInputString(), e.getMessage()));
                 }
             }
             result.complete(null);

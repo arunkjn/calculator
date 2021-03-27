@@ -1,7 +1,5 @@
 package com.arunkjn.calculator.core;
 
-import com.arunkjn.calculator.core.inputToken.InputToken;
-import com.arunkjn.calculator.core.inputToken.InputTokenFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -22,12 +20,12 @@ public class Utils {
             final int matchStart = whitespaceMatcher.start();
             final int matchEnd = whitespaceMatcher.end();
             if(matchStart != 0){
-                result.add(InputTokenFactory.getInputToken(input.substring(lastMatchEnd, matchStart), lastMatchEnd));
+                result.add(new InputToken(input.substring(lastMatchEnd, matchStart), lastMatchEnd));
             }
             lastMatchEnd = matchEnd;
         }
         if(lastMatchEnd < input.length()) {
-            result.add(InputTokenFactory.getInputToken(input.substring(lastMatchEnd), lastMatchEnd));
+            result.add(new InputToken(input.substring(lastMatchEnd), lastMatchEnd));
         }
         return result;
     }
