@@ -25,5 +25,5 @@ The build is currently missing relese and version management using `maven-releas
 1. When an operator fails to execute due to arithmetic error such as divide by zero, the operands are put back on stack and a error message is shown.
 2. If the user enters an invalid token in the string it is treated as an unsupported operator. A warning message is shown, and the operator is ignored. The rest of input string continues to process normally.
 3. A numeric input is expected from user in the form of a decimal formatted string with an optional (-) sign. Any other formats including scientific notation will not be recognized.
-
+4. There is no limit implemented to the stack size and undo stack size. Althought there must ideally be some sane limit in production web app.
 
