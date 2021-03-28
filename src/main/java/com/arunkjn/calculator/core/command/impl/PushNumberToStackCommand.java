@@ -1,7 +1,7 @@
 package com.arunkjn.calculator.core.command.impl;
 
 import com.arunkjn.calculator.core.CalculatorContext;
-import com.arunkjn.calculator.core.InputToken;
+import com.arunkjn.calculator.core.parsing.InputToken;
 import com.arunkjn.calculator.core.command.Effect;
 import com.arunkjn.calculator.core.command.Command;
 import java.math.BigDecimal;

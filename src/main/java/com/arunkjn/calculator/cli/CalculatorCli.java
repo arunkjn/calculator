@@ -3,6 +3,7 @@ package com.arunkjn.calculator.cli;
 import com.arunkjn.calculator.core.Calculator;
 import com.arunkjn.calculator.core.CalculatorContext;
 import com.arunkjn.calculator.core.RPNCalculator;
+import com.arunkjn.calculator.core.exception.OperatorException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
@@ -14,7 +15,7 @@ import java.util.concurrent.Executors;
  *
  */
 public class CalculatorCli {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
 
         final CalculatorContext context = new CalculatorContext();
         final ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -32,7 +33,11 @@ public class CalculatorCli {
                 try {
                     calculator.process(input).get();
                 } catch (ExecutionException e) {
-                    System.out.println(e.getCause().getMessage());
+                    if(e.getCause() instanceof OperatorException) {
+                        System.out.println(e.getCause().getMessage());
+                    } else {
+                        throw e;
+                    }
                 }
                 try {
                     List<String> result = calculator.getResult().get();

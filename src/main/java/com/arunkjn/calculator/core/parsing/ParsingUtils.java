@@ -1,4 +1,4 @@
-package com.arunkjn.calculator.core;
+package com.arunkjn.calculator.core.parsing;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 /**
  * A utility class containing some pure static functions which don't have any dependencies.
  */
-public class Utils {
+public class ParsingUtils {
     private static final Pattern WHITESPACE_PATTERN = Pattern.compile("\\s+");
     private static final Pattern NUMERIC_PATTERN = Pattern.compile("-?\\d+(\\.\\d+)?");
 
@@ -28,12 +28,12 @@ public class Utils {
             final int matchStart = whitespaceMatcher.start();
             final int matchEnd = whitespaceMatcher.end();
             if(matchStart != 0){
-                result.add(new InputToken(input.substring(lastMatchEnd, matchStart), lastMatchEnd));
+                result.add(new InputToken(input.substring(lastMatchEnd, matchStart), lastMatchEnd + 1));
             }
             lastMatchEnd = matchEnd;
         }
         if(lastMatchEnd < input.length()) {
-            result.add(new InputToken(input.substring(lastMatchEnd), lastMatchEnd));
+            result.add(new InputToken(input.substring(lastMatchEnd), lastMatchEnd + 1));
         }
         return result;
     }

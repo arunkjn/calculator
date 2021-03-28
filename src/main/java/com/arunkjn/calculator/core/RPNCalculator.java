@@ -4,12 +4,18 @@ import com.arunkjn.calculator.core.command.Effect;
 import com.arunkjn.calculator.core.exception.OperatorException;
 import com.arunkjn.calculator.core.command.Command;
 import com.arunkjn.calculator.core.command.CommandFactory;
+import com.arunkjn.calculator.core.parsing.InputToken;
+import com.arunkjn.calculator.core.parsing.ParsingUtils;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 
+/**
+ * An RPN implementation of calculator interface.
+ * https://en.wikipedia.org/wiki/Reverse_Polish_notation
+ */
 public class RPNCalculator implements Calculator{
 
     private final CalculatorContext context;
@@ -38,15 +44,20 @@ public class RPNCalculator implements Calculator{
         return result;
     }
 
+    /**
+     * @throws OperatorException wrapped as ExecutionException
+     * @param inputString - String containing numbers and operators separated byh whitespace characters
+     * @return object to track the completion of this processing
+     */
     @Override
     public CompletableFuture<Void> process(String inputString) {
         final CompletableFuture<Void> result = new CompletableFuture<>();
 
         executorService.submit(() -> {
-            List<InputToken> tokens = Utils.tokenize(inputString);
+            List<InputToken> tokens = ParsingUtils.tokenize(inputString);
 
             for(InputToken token: tokens) {
-                Command command = CommandFactory.getOperator(token);
+                Command command = CommandFactory.getCommand(token);
                 if (!command.validate(context)) {
                     result.completeExceptionally(new OperatorException(token.getOriginalToken(), token.getPositionInInputString(), "insufficient parameters"));
                 }

@@ -1,4 +1,4 @@
-package com.arunkjn.calculator.core;
+package com.arunkjn.calculator.core.parsing;
 
 import java.util.Objects;
 
@@ -11,7 +11,7 @@ public class InputToken {
      */
     private final String originalToken;
     /**
-     * The position of token in the original string
+     * The non-zero index position of token in the original string
      */
     private final int position;
 
