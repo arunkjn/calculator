@@ -1,5 +1,9 @@
 package com.arunkjn.calculator.core.command;
 
+/**
+ * An enum to represent the different types of possible commands string identifiers
+ * used to represent them.
+ */
 public enum CommandType {
     PLUS("+"),
     MINUS("-"),
@@ -12,6 +16,9 @@ public enum CommandType {
 
     private final String value;
     CommandType(String value){
+        if(value == null){
+            throw new NullPointerException("argument cannot be null");
+        }
         this.value = value;
     }
 

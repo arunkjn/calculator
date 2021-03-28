@@ -7,6 +7,9 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Stack;
 
+/**
+ * pops two items from stack and pushes their multiplication
+ */
 public class MultiplicationCommand implements Command {
 
     @Override

@@ -5,13 +5,17 @@ import com.arunkjn.calculator.core.Utils;
 import com.arunkjn.calculator.core.command.impl.ClearCommand;
 import com.arunkjn.calculator.core.command.impl.DivisionCommand;
 import com.arunkjn.calculator.core.command.impl.InvalidCommand;
-import com.arunkjn.calculator.core.command.impl.MinusCommand;
+import com.arunkjn.calculator.core.command.impl.SubtractionCommand;
 import com.arunkjn.calculator.core.command.impl.MultiplicationCommand;
-import com.arunkjn.calculator.core.command.impl.PlusCommand;
+import com.arunkjn.calculator.core.command.impl.AdditionCommand;
 import com.arunkjn.calculator.core.command.impl.PushNumberToStackCommand;
 import com.arunkjn.calculator.core.command.impl.SquareRootCommand;
 import com.arunkjn.calculator.core.command.impl.UndoCommand;
 
+/**
+ * This class implements a Factory design pattern to initialize an appropriate
+ * command based on user input
+ */
 public class CommandFactory {
     public static Command getOperator(InputToken token) {
         if(Utils.isNumeric(token.getOriginalToken())) {
@@ -20,9 +24,9 @@ public class CommandFactory {
             CommandType type = CommandType.fromString(token.getOriginalToken());
             switch (type) {
                 case PLUS:
-                    return new PlusCommand();
+                    return new AdditionCommand();
                 case MINUS:
-                    return new MinusCommand();
+                    return new SubtractionCommand();
                 case DIVIDE:
                     return new DivisionCommand();
                 case MULTIPLY:

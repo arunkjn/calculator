@@ -6,10 +6,19 @@ import com.arunkjn.calculator.core.command.Command;
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * Reveres the result of last command by using {@code (context.getUndoStack())}
+ *
+ */
 public class UndoCommand implements Command {
     @Override
     public int getNumOperands() {
         return 0;
+    }
+
+    @Override
+    public boolean validate(CalculatorContext context) {
+        return context.getUndoStack().size() > 0;
     }
 
     @Override

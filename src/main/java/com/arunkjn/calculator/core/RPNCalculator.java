@@ -16,13 +16,16 @@ public class RPNCalculator implements Calculator{
     private final ExecutorService executorService;
 
     public RPNCalculator(CalculatorContext context, ExecutorService executorService) {
+        if(context == null || executorService == null) {
+            throw new NullPointerException("arguments cannot be null");
+        }
         this.context = context;
         this.executorService = executorService;
     }
 
     @Override
     public CompletableFuture<List<String>> getResult() {
-        CompletableFuture<List<String>> result = new CompletableFuture<>();
+        final CompletableFuture<List<String>> result = new CompletableFuture<>();
         executorService.submit(() -> {
             result.complete(
                 context.getStack().stream()
@@ -37,14 +40,14 @@ public class RPNCalculator implements Calculator{
 
     @Override
     public CompletableFuture<Void> process(String inputString) {
-        CompletableFuture<Void> result = new CompletableFuture<>();
+        final CompletableFuture<Void> result = new CompletableFuture<>();
 
         executorService.submit(() -> {
             List<InputToken> tokens = Utils.tokenize(inputString);
 
             for(InputToken token: tokens) {
                 Command command = CommandFactory.getOperator(token);
-                if (context.getStack().size() < command.getNumOperands()) {
+                if (!command.validate(context)) {
                     result.completeExceptionally(new OperatorException(token.getOriginalToken(), token.getPositionInInputString(), "insufficient parameters"));
                 }
                 try {

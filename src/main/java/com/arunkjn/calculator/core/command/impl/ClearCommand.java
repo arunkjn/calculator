@@ -7,7 +7,11 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import java.util.stream.Collectors;
 
+/**
+ * Clears all elements from stack
+ */
 public class ClearCommand implements Command {
     @Override
     public int getNumOperands() {
@@ -17,10 +21,8 @@ public class ClearCommand implements Command {
     @Override
     public Effect execute(CalculatorContext context) {
         final Stack<BigDecimal> stack = context.getStack();
-        final List<BigDecimal> elements = new ArrayList<>(stack.size());
-        while (!stack.empty()){
-            elements.add(stack.pop());
-        }
+        final List<BigDecimal> elements = new ArrayList<>(stack);
+        stack.clear();
         return new Effect(elements, List.of());
     }
 }

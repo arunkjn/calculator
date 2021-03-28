@@ -7,7 +7,11 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Stack;
 
-public class PlusCommand implements Command {
+/**
+ * Pops two elements from stack and pushes their sum.
+ *
+ */
+public class AdditionCommand implements Command {
 
     @Override
     public int getNumOperands() {

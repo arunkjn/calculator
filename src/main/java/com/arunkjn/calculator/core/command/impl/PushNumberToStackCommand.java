@@ -7,6 +7,9 @@ import com.arunkjn.calculator.core.command.Command;
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * Pushes a number to the stack
+ */
 public class PushNumberToStackCommand implements Command {
 
     private final InputToken token;

@@ -7,6 +7,12 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Stack;
 
+/**
+ * Pops two elements from stack and pushes division of second number by first
+ *
+ * @throws ArithmeticException if divisor is zero
+ *
+ */
 public class DivisionCommand implements Command {
     @Override
     public int getNumOperands() {
@@ -18,7 +24,15 @@ public class DivisionCommand implements Command {
         final Stack<BigDecimal> stack = context.getStack();
         final BigDecimal second = stack.pop();
         final BigDecimal first = stack.pop();
-        final BigDecimal result = first.divide(second, context.getStorageDecimalPrecision(), context.getRoundingMode());
+        final BigDecimal result;
+        try {
+            result = first.divide(second, context.getStorageDecimalPrecision(), context.getRoundingMode());
+        } catch (ArithmeticException e) {
+            // push the operands back on stack in case of error
+            stack.push(first);
+            stack.push(second);
+            throw e;
+        }
         stack.push(result);
         return new Effect(List.of(first, second), List.of(result));
     }

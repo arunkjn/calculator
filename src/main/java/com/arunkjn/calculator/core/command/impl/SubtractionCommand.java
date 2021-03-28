@@ -7,7 +7,11 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Stack;
 
-public class MinusCommand implements Command {
+/**
+ * Pops two items from stack and subtracts first from second.
+ * Then pushes the result to stacl
+ */
+public class SubtractionCommand implements Command {
     @Override
     public int getNumOperands() {
         return 2;

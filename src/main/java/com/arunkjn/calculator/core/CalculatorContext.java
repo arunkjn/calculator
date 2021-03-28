@@ -5,11 +5,29 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Stack;
 
+/**
+ * A class used to represent the calculator settings and the state of calculator
+ */
 public class CalculatorContext {
+    /**
+     * the main operating stack of calculator
+     */
     private final Stack<BigDecimal> stack;
+    /**
+     * A stack used to support undo operations in the calculator
+     */
     private final Stack<Effect> undoStack;
+    /**
+     * Number of decimal points to support while storing the numbers on main stack
+     */
     private final int storageDecimalPrecision;
+    /**
+     * Number of decimal points to support when formatting the stack items for display
+     */
     private final int displayDecimalPrecision;
+    /**
+     * Rounding mode used to round the numbers if required while storing on stack and displaying
+     */
     private final RoundingMode roundingMode;
 
     public CalculatorContext() {
