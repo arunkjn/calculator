@@ -3,11 +3,8 @@ package com.arunkjn.calculator;
 import com.arunkjn.calculator.core.Calculator;
 import com.arunkjn.calculator.core.CalculatorContext;
 import com.arunkjn.calculator.core.RPNCalculator;
+import com.arunkjn.calculator.core.exception.OperatorException;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -23,28 +20,24 @@ public class RPNCalculatorTest {
             throw new IllegalArgumentException("all input lists should be same length");
         }
         CalculatorContext context = new CalculatorContext();
-        Calculator calculator = new RPNCalculator(context, Executors.newSingleThreadExecutor());
-        final AtomicInteger i = new AtomicInteger(0);
+        Calculator calculator = new RPNCalculator(context);
+        int i = 0;
         for (String input: inputs) {
             try {
-                calculator.process(input)
-                    .thenCompose(unused -> calculator.getResult())
-                    .thenCompose(strings -> {
-                        Assertions.assertEquals(outputs.get(i.get()), strings);
-                        return CompletableFuture.supplyAsync(() -> "done");
-                    }).get();
-
-                if(!exceptionMessages.get(i.get()).equals("")) {
-                    Assertions.fail("Required exception was not thrown at index " + i.get());
+                calculator.process(input);
+                if (!exceptionMessages.get(i).equals("")) {
+                    Assertions.fail("Required exception was not thrown at index " + i);
                 }
-                i.getAndIncrement();
-            } catch (ExecutionException e) {
-                String expected = exceptionMessages.get(i.getAndIncrement());
+            } catch (OperatorException e) {
+                String expected = exceptionMessages.get(i);
                 if(expected.equals("")) {
                     Assertions.fail(e.getCause().getMessage());
                 }
-                Assertions.assertEquals(expected, e.getCause().getMessage());
+                Assertions.assertEquals(expected, e.getMessage());
             }
+            List<String> result = calculator.getResult();
+            Assertions.assertEquals(outputs.get(i), result);
+            i++;
         }
     }
 
