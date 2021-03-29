@@ -3,20 +3,21 @@ package com.arunkjn.calculator.core;
 import com.arunkjn.calculator.core.command.Effect;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Stack;
+import java.util.Deque;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 /**
- * A class used to represent the calculator settings and the state of calculator
+ * A class used to represent the calculator settings and the state of calculator.
  */
 public class CalculatorContext {
     /**
      * the main operating stack of calculator
      */
-    private final Stack<BigDecimal> stack;
+    private final Deque<BigDecimal> stack;
     /**
      * A stack used to support undo operations in the calculator
      */
-    private final Stack<Effect> undoStack;
+    private final Deque<Effect> undoStack;
     /**
      * Number of decimal points to support while storing the numbers on main stack
      */
@@ -31,15 +32,16 @@ public class CalculatorContext {
     private final RoundingMode roundingMode;
 
     public CalculatorContext() {
-        this(new Stack<>(), new Stack<>());
+        this(new ConcurrentLinkedDeque<>(), new ConcurrentLinkedDeque<>());
     }
 
-    public CalculatorContext(Stack<BigDecimal> stack, Stack<Effect> undoStack) {
+    public CalculatorContext(Deque<BigDecimal> stack, Deque<Effect> undoStack) {
         this(stack, undoStack, 15, 10, RoundingMode.HALF_UP);
     }
 
-    public CalculatorContext(Stack<BigDecimal> stack, Stack<Effect> undoStack, int storageDecimalPrecision, int displayDecimalPrecision, RoundingMode roundingMode) {
-        if(stack == null || undoStack == null || roundingMode == null){
+    public CalculatorContext(Deque<BigDecimal> stack, Deque<Effect> undoStack, int storageDecimalPrecision, int displayDecimalPrecision,
+                             RoundingMode roundingMode) {
+        if (stack == null || undoStack == null || roundingMode == null) {
             throw new NullPointerException("Arguments cannot be null");
         }
         this.stack = stack;
@@ -49,11 +51,11 @@ public class CalculatorContext {
         this.roundingMode = roundingMode;
     }
 
-    public Stack<BigDecimal> getStack() {
+    public Deque<BigDecimal> getStack() {
         return stack;
     }
 
-    public Stack<Effect> getUndoStack() {
+    public Deque<Effect> getUndoStack() {
         return undoStack;
     }
 

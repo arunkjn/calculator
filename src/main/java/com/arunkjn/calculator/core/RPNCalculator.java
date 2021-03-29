@@ -7,6 +7,7 @@ import com.arunkjn.calculator.core.command.CommandFactory;
 import com.arunkjn.calculator.core.parsing.InputToken;
 import com.arunkjn.calculator.core.parsing.ParsingUtils;
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -30,16 +31,16 @@ public class RPNCalculator implements Calculator{
     }
 
     @Override
-    public CompletableFuture<List<String>> getResult() {
+    public synchronized CompletableFuture<List<String>> getResult() {
         final CompletableFuture<List<String>> result = new CompletableFuture<>();
         executorService.submit(() -> {
-            result.complete(
-                context.getStack().stream()
-                    .map(v -> v.setScale(context.getDisplayDecimalPrecision(), context.getRoundingMode()))
-                    .map(BigDecimal::stripTrailingZeros)
-                    .map(BigDecimal::toPlainString)
-                    .collect(Collectors.toList())
-            );
+             List<String> stackElements = context.getStack().stream()
+                .map(v -> v.setScale(context.getDisplayDecimalPrecision(), context.getRoundingMode()))
+                .map(BigDecimal::stripTrailingZeros)
+                .map(BigDecimal::toPlainString)
+                .collect(Collectors.toList());
+             Collections.reverse(stackElements);
+            result.complete(stackElements);
         });
         return result;
     }

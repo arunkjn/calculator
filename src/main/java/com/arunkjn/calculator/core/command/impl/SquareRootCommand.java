@@ -5,6 +5,7 @@ import com.arunkjn.calculator.core.command.Effect;
 import com.arunkjn.calculator.core.command.Command;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.util.Deque;
 import java.util.List;
 import java.util.Stack;
 
@@ -21,7 +22,7 @@ public class SquareRootCommand implements Command {
 
     @Override
     public Effect execute(CalculatorContext context) {
-        final Stack<BigDecimal> stack = context.getStack();
+        final Deque<BigDecimal> stack = context.getStack();
         final BigDecimal operand = stack.pop();
         final BigDecimal result;
         try {

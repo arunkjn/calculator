@@ -13,11 +13,6 @@ The build generates a bundled jar with all dependencies and you can run it with 
 ```shell
 java -jar target/calculator-1.0-SNAPSHOT-jar-with-dependencies.jar
 ```
-It also builds a docker image with the tag `calculator-cli` to a local docker daemon.
-You can run it with 
-```shell
-docker run -it calculator-cli
-```
 It also generates a code coverage report with the jacoco plugin which can be viewed in `target/site/jacoco/index.html`.
 The build is currently missing relese and version management using `maven-release-plugin`
 
